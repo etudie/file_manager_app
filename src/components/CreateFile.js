@@ -5,6 +5,7 @@ import { Folder } from '../types/Folder';
 export default function CreateFile(props) {
   const root = props.root;
   const currFolder = props.currFolder;
+  const setCreateFileShow = props.setCreateFileShow;
   const [fileName, setFileName] = useState('');
   const [fileType, setFileType] = useState('txt');
   const [isShared, setIsShared] = useState('true');
@@ -30,6 +31,7 @@ export default function CreateFile(props) {
       setFileName('');
       setFileType('txt');
       setIsShared('true');
+      setCreateFileShow(false);
     }
   };
 
@@ -68,6 +70,7 @@ export default function CreateFile(props) {
         </select>
         <br />
         <button onClick={createFileHandle}>Submit</button>
+        <button onClick={() => setCreateFileShow(false)}>Cancel</button>
       </div>
     </>
   );

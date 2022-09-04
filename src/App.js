@@ -11,7 +11,8 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [users, setUsers] = useState([
     { username: 'meow', password: 'meow' },
-    { username: 'justin', password: 'justin' }
+    { username: 'justin', password: 'justin' },
+    { username: 'rawi', password: 'rawi' }
   ]);
 
   const main = new Folder('main', true);
