@@ -3,6 +3,9 @@ export default function EditFolder(props) {
   const currFolder = props.currFolder;
   const setCurrFolder = props.setCurrFolder;
   const setFolderEditShow = props.setFolderEditShow;
+  const back = props.back;
+  const setBack = props.setBack;
+  const setRoot = props.setRoot;
   const [folderName, setFolderName] = useState(currFolder.name);
   const [folderIsShared, setFolderIsShared] = useState(currFolder.isShared);
 
@@ -12,6 +15,28 @@ export default function EditFolder(props) {
     setCurrFolder('');
     setFolderName('');
     setFolderEditShow(false);
+  };
+
+  const deleteFolderHandle = () => {
+    if (
+      window.confirm(
+        'Are you sure you want to delete this folder? YOU WILL DELETE ALL INCLUSIVE FILES AND FOLDERS.'
+      )
+    ) {
+      var parentFolder = back[back.length - 1];
+      console.log(parentFolder);
+      var locatedFolderIdx = null;
+      parentFolder.items.map((item, idx) => {
+        if (item.name == currFolder.name) {
+          locatedFolderIdx = idx;
+          return;
+        }
+      });
+      parentFolder.items.splice(locatedFolderIdx, 1);
+      setBack(back.slice(0, -1));
+      setRoot(back[back.length - 1]);
+      setFolderEditShow(false);
+    }
   };
 
   useEffect(() => {
@@ -39,6 +64,10 @@ export default function EditFolder(props) {
       <br />
       <button onClick={editFolderHandle}>Submit</button>
       <button onClick={() => setFolderEditShow(false)}>Cancel</button>
+      <br />
+      <button className='delete' onClick={deleteFolderHandle}>
+        Delete
+      </button>
     </>
   );
 }

@@ -3,6 +3,8 @@ export default function EditFile(props) {
   const currFile = props.currFile;
   const setCurrFile = props.setCurrFile;
   const setFileEditShow = props.setFileEditShow;
+  const currFolder = props.currFolder;
+  const setCurrFolder = props.setCurrFolder;
   const [fileName, setFileName] = useState(currFile.name);
   const [fileType, setFileType] = useState(currFile.type);
   const [fileIsShared, setFileIsShared] = useState(currFile.isShared);
@@ -15,6 +17,19 @@ export default function EditFile(props) {
     setFileName('');
     setFileType('txt');
     setFileEditShow(false);
+  };
+
+  const deleteFileHandle = () => {
+    if (window.confirm('Are you sure you want to delete this file?')) {
+      var locatedFileIdx = null;
+      currFolder.items.map((item, idx) => {
+        if (item.name == currFile.name && item.type == currFile.type) {
+          locatedFileIdx = idx;
+        }
+      });
+      currFolder.items.splice(locatedFileIdx, 1);
+      setFileEditShow(false);
+    }
   };
 
   useEffect(() => {
@@ -55,6 +70,10 @@ export default function EditFile(props) {
       <br />
       <button onClick={editFileHandle}>Submit</button>
       <button onClick={() => setFileEditShow(false)}>Cancel</button>
+      <br />
+      <button className='delete' onClick={deleteFileHandle}>
+        Delete
+      </button>
     </>
   );
 }

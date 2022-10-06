@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 export default function Login(props) {
   const isLoggedIn = props.isLoggedIn;
+  const setIsLoggedIn = props.setIsLoggedIn;
+  const logUsername = props.logUsername;
+  const setLogUsername = props.setLogUsername;
   const [toggleLogin, setToggleLogin] = useState(false);
 
   const [username, setUsername] = useState('');
@@ -26,12 +29,33 @@ export default function Login(props) {
       props.setUsers((prev) => {
         return [...prev, { username: username, password: password }];
       });
-      props.setIsLoggedIn(true);
+      setLogUsername(username);
+      setIsLoggedIn(true);
+    }
+  };
+
+  const loginHandle = () => {
+    var loggedIn = false;
+    users.forEach(function (item) {
+      if (
+        item.username.toLowerCase() == username.toLowerCase() &&
+        password == item.password
+      ) {
+        setLogUsername(username);
+        setIsLoggedIn(true);
+        loggedIn = true;
+        return;
+      }
+    });
+
+    if (!loggedIn) {
+      alert('Username or password is incorrect');
     }
   };
   const toggleLoginHandle = () => {
     setToggleLogin(!toggleLogin);
   };
+
   if (!isLoggedIn) {
     if (toggleLogin) {
       return (
@@ -56,7 +80,7 @@ export default function Login(props) {
               }}
             />
             <br />
-            <button>Login</button>
+            <button onClick={loginHandle}>Login</button>
             <br />
             <small>
               <a href='#' onClick={toggleLoginHandle}>

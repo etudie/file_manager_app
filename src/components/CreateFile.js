@@ -25,7 +25,12 @@ export default function CreateFile(props) {
       }
     });
     if (!error) {
-      const file = new Document(fileName, fileType, isShared);
+      const file = new Document(
+        fileName,
+        fileType,
+        isShared,
+        props.logUsername
+      );
       currFolder.items.push(file);
       props.setRoot(Object.assign({}, root));
       setFileName('');
@@ -37,7 +42,6 @@ export default function CreateFile(props) {
 
   return (
     <>
-      {console.log(fileName, fileType, isShared)}
       <div>
         <h2>Create a file</h2>
         <label>File name and type:</label>

@@ -21,7 +21,7 @@ export default function CreateFile(props) {
       }
     });
     if (!error) {
-      const folder = new Folder(folderName, isShared);
+      const folder = new Folder(folderName, isShared, props.logUsername);
       currFolder.items.push(folder);
       props.setRoot(Object.assign({}, root));
       setFolderName('');
